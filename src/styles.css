@@ -1,0 +1,177 @@
+/* You can add global styles to this file, and also import other style files */
+/* styles.css */
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: radial-gradient(rgb(6, 0, 114), rgb(61, 138, 202));
+}
+
+#estoque {
+    width: 400px;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgb(0, 0, 0);
+}
+
+.input-group {
+    margin-bottom: 10px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+#output {
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px solid rgb(0, 0, 0);
+    border-radius: 4px;
+    max-height: 200px; /* Defina a altura máxima conforme necessário */
+    overflow-y: auto;
+}
+
+.remove-btn {
+    background-color: #dc0000;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    margin-left: 5px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #f4f4f4;
+}
+
+#estoque {
+    width: 700px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.input-group {
+    margin-bottom: 10px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+#output {
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    max-height: 200px; /* Defina a altura máxima conforme necessário */
+    overflow-y: auto;
+}
+
+.remove-btn {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    margin-left: 5px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+#output > div {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#output strong {
+    max-width: 150px; /* Defina a largura máxima conforme necessário */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.remove-btn {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+#output > div {
+    margin-bottom: 10px;
+}
+
+/* Definindo largura máxima para o nome do produto */
+#output strong {
+    max-width: 150px; 
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+@media only screen and (max-width: 414px) { /* iPhone 11 */
+    body {
+        justify-content: flex-start;
+    }
+
+    #estoque {
+        border-radius: 0;
+    }
+
+    #output {
+        max-height: none;
+    }
+
+    #output > div {
+        max-width: 100%;
+    }
+
+    #output strong {
+        max-width: 100%;
+        display: block;
+        white-space: normal;
+    }
+}
+
+
+/* Adicione estilos conforme necessário */
+
+.input-group {
+    margin-bottom: 15px;
+}
+
+.info-icon {
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+.info-text {
+    display: none;
+    margin-top: 5px;
+    color: #333;
+}

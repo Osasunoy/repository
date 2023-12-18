@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Estoque</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div id="estoque">
+    <h2>Sistema de Estoque</h2>
+
+    <div class="input-group" onmouseover="mostrarEspecificacoes()" onmouseout="ocultarEspecificacoes()">
+        <label for="produto">Produto:</label>
+        <input type="text" id="produto">
+        
+        <div class="info-text" id="infoProduto">Especificações do Produto: Aqui você pode inserir detalhes adicionais sobre o produto.</div>
+    </div>
+
+    <div class="input-group">
+        <label for="especificacoes">Especificações:</label>
+        <textarea id="especificacoes" rows="4" placeholder="Insira as especificações do produto"></textarea>
+    </div>
+
+    <div class="input-group">
+        <label for="quantidade">Quantidade:</label>
+        <input type="number" id="quantidade">
+    </div>
+
+    <button onclick="adicionarProduto()">Adicionar Produto</button>
+
+    <div id="output"></div>
+
+    <button id="generate-pdf">Gerar PDF</button>
+    <div id="content">
+        <!-- Conteúdo para gerar o PDF -->
+    </div>
+
+    
+</div>
+
+<script src="https://rawgit.com/eKoopmans/html2pdf/master/dist/html2pdf.bundle.js"></script>
+<script src="script.js"></script>
+
+<script>
+    var estoque = [];
+
+    if (localStorage.getItem('estoque')) {
+        estoque = JSON.parse(localStorage.getItem('estoque'));
+        mostrarEstoque();
+    }
+
+    function adicionarProduto() {
+        var produtoInput = document.getElementById("produto");
+        var quantidadeInput = document.getElementById("quantidade");
+        var especificacoesTextarea = document.getElementById("especificacoes");
+
+        var produto = produtoInput.value;
+        var quantidade = parseInt(quantidadeInput.value);
+        var especificacoes = especificacoesTextarea.value;
+
+        if (produto && !isNaN(quantidade) && quantidade > 0) {
+            estoque.push({ produto: produto, quantidade: quantidade, especificacoes: especificacoes });
+
+            localStorage.setItem('estoque', JSON.stringify(estoque));
+
+            mostrarEstoque();
+        } else {
+            alert("Por favor, preencha os campos corretamente.");
+        }
+
+        produtoInput.value = "";
+        quantidadeInput.value = "";
+        especificacoesTextarea.value = "";
+    }
+
+    function removerProduto(index) {
+        estoque.splice(index, 1);
+
+        localStorage.setItem('estoque', JSON.stringify(estoque));
+
+        mostrarEstoque();
+    }
+
+ 
+
+  
+
+    function mostrarEstoque() {
+        var outputDiv = document.getElementById("output");
+        outputDiv.innerHTML = "";
+
+        for (var i = 0; i < estoque.length; i++) {
+            var produto = estoque[i].produto;
+            var quantidade = estoque[i].quantidade;
+            var especificacoes = estoque[i].especificacoes;
+
+            var produtoDiv = document.createElement("div");
+            produtoDiv.innerHTML = "<strong>Produto:</strong> " + produto + " | <strong>Quantidade:</strong> " + quantidade +
+                (especificacoes ? " | <strong>Especificações:</strong> " + especificacoes : "");
+
+            var removeButton = document.createElement("button");
+            removeButton.innerHTML = "Remover";
+            removeButton.className = "remove-btn";
+            removeButton.onclick = (function (index) {
+                return function () {
+                    removerProduto(index);
+                };
+            })(i);
+
+            produtoDiv.appendChild(removeButton);
+            outputDiv.appendChild(produtoDiv);
+        }
+    }
+
+    document.getElementById("generate-pdf").addEventListener("click", function () {
+        // Chamando a função para gerar PDF e passando o estoque como parâmetro
+        gerarPDF(estoque);
+    });
+
+    function gerarPDF(dados) {
+        var options = {
+            margin: 1,
+            filename: 'estoque.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2 },
+            jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+        };
+
+        html2pdf().set(options).from(construirConteudoPDF(dados)).save();
+    }
+
+    function construirConteudoPDF(dados) {
+        var contentDiv = document.createElement("div");
+
+        for (var i = 0; i < dados.length; i++) {
+            var produto = dados[i].produto;
+            var quantidade = dados[i].quantidade;
+            var especificacoes = dados[i].especificacoes;
+
+            var produtoDiv = document.createElement("div");
+            produtoDiv.innerHTML = "<strong>Produto:</strong> " + produto + " | <strong>Quantidade:</strong> " + quantidade +
+                (especificacoes ? " | <strong>Especificações:</strong> " + especificacoes : "");
+
+            contentDiv.appendChild(produtoDiv);
+        }
+
+        return contentDiv;
+    }
+</script>
+
+</body>
+</html>
